@@ -1,46 +1,54 @@
 import React, {Component, PropTypes} from 'react';
 import ReactDOM from 'react-dom';
-
+import helpers from '../utils/xhr'
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-const CardExampleWithAvatar = () => (
+const CardExampleWithAvatar = (data) => (
   <MuiThemeProvider muiTheme={getMuiTheme()}>
     <Card>
       <CardHeader
-        title="URL Avatar"
-        subtitle="Subtitle"
+        title={data.quote.title}
+        subtitle={data.quote.date}
         avatar="http://lorempixel.com/100/100/nature/"
       />
       <CardMedia
-        overlay={<CardTitle title="Overlay title" subtitle="Overlay subtitle" />}
+        overlay={<CardTitle title={data.quote.author} subtitle="Author" />}
       >
-        <img src="http://lorempixel.com/600/337/nature/" />
+        <img src={data.quote.background} />
       </CardMedia>
       <CardTitle title="Card title" subtitle="Card subtitle" />
       <CardText>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-        Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-        Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
+        {data.quote.quote}
       </CardText>
       <CardActions>
-        <FlatButton label="Action1" />
-        <FlatButton label="Action2" />
+        <FlatButton label={data.quote.tags}></FlatButton>
       </CardActions>
     </Card>
   </MuiThemeProvider>
 );
 
-export default class cardd extends Component {
-  render(){
+var card = React.createClass({
+  getInitialState: function(){
+      return {
+        quoteObj : {}
+      }
+  },
+  componentDidMount: function(){
+    helpers.getData().then(function(data){
+      this.setState({
+        quoteObj : data
+      })
+    }.bind(this))
+  },
+  render: function(){
       return (
-        <CardExampleWithAvatar />
+        <CardExampleWithAvatar quote = {this.state.quoteObj}/>
       )
   }
 
-}
-
+})
+module.exports = card
