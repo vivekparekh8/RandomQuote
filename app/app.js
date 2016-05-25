@@ -1,0 +1,18 @@
+import React, {Component, PropTypes} from 'react';
+import ReactDOM from 'react-dom';
+
+import {Router} from 'react-router';
+
+// var React = require('react');
+// var ReactDOM = require('react-dom')
+// var Router = require("react-router").Router
+import routes from './config/routes'
+
+
+ReactDOM.render(
+  <Router>
+    {routes}
+  </Router>,
+  document.getElementById('app')
+)
+
