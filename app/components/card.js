@@ -20,7 +20,7 @@ const CardExampleWithAvatar = (data) => (
       >
         <img src={data.quote.background} />
       </CardMedia>
-      <CardTitle title="Card title" subtitle="Card subtitle" />
+      <CardTitle title="Quote" subtitle={data.quote.author} />
       <CardText>
         {data.quote.quote}
       </CardText>
